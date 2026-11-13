@@ -399,7 +399,7 @@ function openOffice(k,fromHash){
   $('#sh-lg img').src=LOGO[k];
   $('#sh-name').textContent=d.name;$('#sh-sub').textContent=d.sub;
   var b=$('#sh-body');b.style.setProperty('--c',c);b.innerHTML=d.html();b.scrollTop=0;
-  sheet.classList.add('open');if((k==='staff'||k==='bureau')&&sz().W<820)sheet.classList.add('tall');
+  sheet.classList.add('open');if(sz().W<820)sheet.classList.add('tall');
   if(!fromHash){try{history.replaceState(null,'','#'+k)}catch(e){location.hash=k}}
   focusNode(k);
 }
