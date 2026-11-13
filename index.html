@@ -125,7 +125,7 @@ svg.lc text{font-family:var(--head);font-weight:700;fill:var(--text)}
 </head>
 <body>
 <div id="stage"><svg id="board" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-label="Схема профбюро"></svg></div>
-<div id="tag" class="caps">Исходный код профбюро Высшей IT-школы ППОС ТГУ</div>
+<div id="tag" class="caps">Исходный код профбюро Высшей <span style="white-space:nowrap">IT-школы</span> ППОС ТГУ</div>
 <div id="zoom"><button id="zi" aria-label="Увеличить">+</button><button id="zo" aria-label="Уменьшить">−</button><button id="zr" aria-label="Вся схема">⤢</button></div>
 <div id="intro" role="dialog"><div class="ib2"><h2 class="caps">Здесь кликабельно всё</h2><p>Нажимайте на любые плашки: <b>офисы</b>, <b>штаб</b>, рамку <b>«Профбюро»</b>, а также <b>ППОС ТГУ</b>, <b>СКС Профсоюза</b> и <b>учебный офис</b> — у каждой есть своя карточка.</p><p>Схему можно двигать и увеличивать двумя пальцами.</p><button id="intro-x" class="caps">Понятно</button></div></div>
 <div id="sheet" role="dialog" aria-modal="false">
@@ -268,8 +268,9 @@ var ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-widt
 function ib(u){return u?'<a class="ib" href="'+u+'" target="_blank" rel="noopener" aria-label="Открыть">'+ICON+'</a>':''}
 function row(inner,u){return '<div class="row"><div class="bx">'+inner+'</div>'+ib(u)+'</div>'}
 function link(t,u,s){return row('<b>'+t+'</b>'+(s?'<p>'+s+'</p>':''),u)}
+function nb(t){return String(t).replace(/(IT|it)-(школ[а-яё]*)/gi,'<span style="white-space:nowrap">$&</span>')}
 var NAME={ppos:'ППОС ТГУ',sks:'СКС Профсоюза'};
-function go(a){return '<div class="go">'+a.map(function(k){return '<button data-go="'+k+'" style="border-color:'+ACC[k]+'">'+(NAME[k]||LBL[k])+'</button>'}).join('')+'</div>'}
+function go(a){return '<div class="go">'+a.map(function(k){return '<button data-go="'+k+'" style="border-color:'+ACC[k]+'">'+nb(NAME[k]||LBL[k])+'</button>'}).join('')+'</div>'}
 function people(a){return '<div class="people">'+a.map(function(p){return '<div><b>'+p[0]+'</b>'+p[1]+'</div>'}).join('')+'</div>'}
 function tl(a){return '<div class="tl">'+a.map(function(e){return '<div class="it'+(e.hi?' hi':'')+'"><div class="d">'+e.d+'</div>'+row('<b style="font-size:15px;font-weight:600;font-family:var(--body);text-transform:none;line-height:1.3">'+e.t+'</b>'+(e.r?'<div class="r">'+e.r+'</div>':'')+(e.p?'<p>'+e.p.join('<br>')+'</p>':''),e.u)+'</div>'}).join('')+'</div>'}
 function card(t,p,u,l){return row('<b>'+t+'</b>'+(p?'<p>'+p+'</p>':'')+(u&&l?'<small>'+l+'</small>':''),u)}
@@ -397,7 +398,7 @@ function openOffice(k,fromHash){
   var d=D[k];if(!d)return;cur=k;var c=ACC[k];
   sheet.style.setProperty('--c',c);sheet.classList.remove('tall');
   $('#sh-lg img').src=LOGO[k];
-  $('#sh-name').textContent=d.name;$('#sh-sub').textContent=d.sub;
+  $('#sh-name').textContent=d.name;$('#sh-sub').innerHTML=nb(d.sub);
   var b=$('#sh-body');b.style.setProperty('--c',c);b.innerHTML=d.html();b.scrollTop=0;
   sheet.classList.add('open');if(sz().W<820)sheet.classList.add('tall');
   if(!fromHash){try{history.replaceState(null,'','#'+k)}catch(e){location.hash=k}}
